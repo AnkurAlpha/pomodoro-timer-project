@@ -8,3 +8,5 @@ menybar :
         - about
     - quit
 
+step 1 :
+    - take inputs from the user

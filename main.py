@@ -9,6 +9,7 @@ class gui(tk.Tk):
         self.geometry("600x600")
         self.minsize(300, 300)
         self.maxsize(900, 900)
+        self.title("Pomodoro app")
 
     def menubar(self):
         mainmenu = tk.Menu(self)
@@ -35,11 +36,11 @@ class gui(tk.Tk):
 
     # time display
     def display(self):
-        self.var = tk.StringVar()
-        self.var.set("00:00:00")
+        self.dvar = tk.StringVar()
+        self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(0)))
         frm = tk.Frame(self, relief="sunken", border=2, bg="white")
         frm.pack(fill="x", padx=10, pady=10, ipadx=5, ipady=5)
-        a = tk.Label(frm, textvariable=self.var,
+        a = tk.Label(frm, textvariable=self.dvar,
                      font="serif 18 bold", bg="white", fg="black")
         a.pack()
 
@@ -57,21 +58,53 @@ class gui(tk.Tk):
         bstop.pack(side="right", anchor="n", padx=10, pady=10)
 
     def statusbar(self):
-        self.var = tk.StringVar()
-        self.var.set("Welcome")
+        self.tvar = 0
+        self.bvar = 0
+        self.svar = tk.StringVar()
+        self.svar.set("Welcome")
         # add sperator
         tk.Frame(self).pack(fill="x")
         frm = tk.Frame(self)
         frm.pack(side="bottom", fill="x")
-        sbar = tk.Label(self, textvariable=self.var,
+        sbar = tk.Label(self, textvariable=self.svar,
                         relief="sunken", anchor="w")
         sbar.pack(side="bottom", fill="x")
+
+    # for starting
+
+    def changesbar(self, cond):
+        if cond == "break":
+            self.bvar += 1
+        else:
+            self.tvar += 1
+        self.svar.set(f"Pomos : {self.tvar} Breaks : {self.bvar}")
+
+    def changetime(self, secs):
+        self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(secs)))
+
+    def takeinputs(self):
+        self.frm1 = tk.Frame(self)
+        self.frm1.pack(fill="x")
+        timeslider = tk.Scale(self.frm1, from_=0, to=120,
+                              orient="horizontal", tickinterval=60)
+        timeslider.pack(side="right")
+        timemsg = tk.Label(self.frm1, text="Pomo time : ")
+        timemsg.pack(side="left")
+        self.frm2 = tk.Frame(self)
+        self.frm2.pack(fill="x")
+        breakslider = tk.Scale(self.frm2, from_=0, to=30,
+                               orient="horizontal", tickinterval=10)
+        breakslider.pack(side="right")
+        breakmsg = tk.Label(self.frm2, text="Break time : ")
+        breakmsg.pack(side="left")
 
 
 if __name__ == "__main__":
     app = gui()
     app.menubar()
     app.display()
-    app.start_stop()
+    app.takeinputs()
+    # app.start_stop()
     app.statusbar()
+    # app.changesbar()
     app.mainloop()
