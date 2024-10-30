@@ -1,0 +1,10 @@
+# this the place where I am planning the basic design of the project
+
+menybar :
+    - timer
+        - start
+        - reset
+    - info
+        - about
+    - quit
+
