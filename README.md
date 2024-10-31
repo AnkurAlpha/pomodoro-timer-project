@@ -3,6 +3,8 @@ This is my first python project
 
 This is a Pomodoro timer app, which helps you manage your time efficiently by encouraging focused work sessions followed by short breaks.
 
+### Preview
+https://youtu.be/kqcoLTM86hU
 
 ### Module(s) used
 - Tkinter
