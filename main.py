@@ -45,7 +45,7 @@ class gui(tk.Tk):
             tmsg.showinfo("about software", t)
 
         def about_author():
-            t = """The author is AnkurAlpha(Ankur Kumar)\n an engineering student at VIT Chennai (2024-2028)\n persuing his B.Tech degree
+            t = """The author is AnkurAlpha(Ankur Kumar)\n an engineering student at VIT Chennai (2024-2028)\n pursuing his B.Tech degree
 
             link : https://github.com/AnkurAlpha"""
             tmsg.showinfo("about_author", t)
