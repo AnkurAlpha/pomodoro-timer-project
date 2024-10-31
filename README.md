@@ -12,13 +12,13 @@ This is a Pomodoro timer app, which helps you manage your time efficiently by en
 1. Install tkinter
 
 2. Clone the repository:
-   ```bash
+    ```bash
     git clone https://github.com/AnkurAlpha/pomodoro-timer-project.git
     ```
 
 3. Navigate to the project directory
     ```bash
-    cd  pomodoro-timer-project
+    cd pomodoro-timer-project
     ```
 
 4. Run main.py
@@ -36,4 +36,4 @@ This is a Pomodoro timer app, which helps you manage your time efficiently by en
 
 ### License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE).
