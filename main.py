@@ -156,7 +156,7 @@ class gui(tk.Tk):
                 self.changesbar("break")
             if self.time_breaker is True:
                 break
-            tmsg.askyesno(
+            tmsg.showinfo(
                 "Break Over", "Break is over")
 
     def ignite(self):
