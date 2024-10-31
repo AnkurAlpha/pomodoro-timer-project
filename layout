@@ -2,11 +2,10 @@
 
 menybar :
     - timer
-        - start
         - reset
     - info
         - about
-    - quit
+    - quit - completed
 
 step 1 :
     - take inputs from the user

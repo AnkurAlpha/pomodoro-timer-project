@@ -10,14 +10,18 @@ class gui(tk.Tk):
         self.minsize(300, 300)
         self.maxsize(900, 900)
         self.title("Pomodoro app")
+        self.resetter = False
+
+    def resetting_process(self):
+        self.resetter = True
 
     def menubar(self):
         mainmenu = tk.Menu(self)
 
         # timer option
         m1 = tk.Menu(mainmenu, tearoff=0)
-        m1.add_command(label="start")
-        m1.add_command(label="stop")
+        m1.add_command(label="reset", command=self.resetting_process)
+        # m1.add_command(label="stop")
         mainmenu.add_cascade(label="timer", menu=m1)
 
         # info option
@@ -29,6 +33,8 @@ class gui(tk.Tk):
         def quitapp():
             a = tmsg.askyesno("Quit", "Do you want to quit the application ?")
             if a:
+                self.resetter = True
+                self.disp.destroy()
                 self.destroy()
 
         mainmenu.add_command(label="quit", command=quitapp)
@@ -40,9 +46,9 @@ class gui(tk.Tk):
         self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(0)))
         frm = tk.Frame(self, relief="sunken", border=2, bg="white")
         frm.pack(fill="x", padx=10, pady=10, ipadx=5, ipady=5)
-        a = tk.Label(frm, textvariable=self.dvar,
-                     font="serif 18 bold", bg="white", fg="black")
-        a.pack()
+        self.disp = tk.Label(frm, textvariable=self.dvar,
+                             font="serif 18 bold", bg="white", fg="black")
+        self.disp.pack()
 
     # display buttons
     def start_stop(self):
@@ -82,7 +88,49 @@ class gui(tk.Tk):
     def changetime(self, secs):
         self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(secs)))
 
-    def takeinputs(self):
+    def start_timer(self):
+        while True:
+            for i in range(self.counttime*60):
+                self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(i)))
+                self.disp.update()
+                if self.resetter is True:
+                    self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(0)))
+                    self.disp.update()
+                    break
+                time.sleep(1)
+            self.changesbar("time")
+            if self.resetter is True:
+                break
+            repeater = tmsg.askyesno(
+                "Time Over", "Time is over. Do you want break ?")
+            print(repeater)
+            if repeater is True:
+                for i in range(self.countbreak*60):
+                    self.dvar.set(time.strftime(
+                        "%H:%M:%S", time.gmtime(i)))
+                    self.disp.update()
+                    time.sleep(1)
+                    if self.resetter is True:
+                        self.dvar.set(time.strftime(
+                            "%H:%M:%S", time.gmtime(0)))
+                        self.disp.update()
+                        break
+                self.changesbar("break")
+            if self.resetter is True:
+                break
+            tmsg.askyesno(
+                "Break Over", "Break is over")
+
+    def the_main_process(self):
+
+        def ignite():
+            self.counttime = timeslider.get()
+            self.countbreak = breakslider.get()
+            self.frm1.destroy()
+            self.frm2.destroy()
+            self.frm3.destroy()
+            self.start_timer()
+
         self.frm1 = tk.Frame(self)
         self.frm1.pack(fill="x")
         timeslider = tk.Scale(self.frm1, from_=0, to=120,
@@ -97,13 +145,18 @@ class gui(tk.Tk):
         breakslider.pack(side="right")
         breakmsg = tk.Label(self.frm2, text="Break time : ")
         breakmsg.pack(side="left")
+        self.frm3 = tk.Frame(self, bg="red")
+        self.frm3.pack()
+        but1 = tk.Button(self.frm3, relief="sunken", border=5,
+                         text="start", command=ignite)
+        but1.pack()
 
 
 if __name__ == "__main__":
     app = gui()
     app.menubar()
     app.display()
-    app.takeinputs()
+    app.the_main_process()
     # app.start_stop()
     app.statusbar()
     # app.changesbar()
