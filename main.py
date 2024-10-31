@@ -162,11 +162,14 @@ class gui(tk.Tk):
     def ignite(self):
         self.counttime = self.timeslider.get()
         self.countbreak = self.breakslider.get()
-        self.frm1.destroy()
-        self.frm2.destroy()
-        self.frm3.destroy()
-        self.bigfont_create()
-        self.start_timer()
+        if self.counttime == 0 or self.countbreak == 0:
+            tmsg.showinfo("Warning", "values can't be left zero")
+        else:
+            self.frm1.destroy()
+            self.frm2.destroy()
+            self.frm3.destroy()
+            self.bigfont_create()
+            self.start_timer()
 
     def the_main_process(self):
 
