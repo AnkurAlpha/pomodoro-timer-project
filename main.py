@@ -6,10 +6,11 @@ import time
 class gui(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry("600x600")
+        self.geometry("300x300")
         self.minsize(300, 300)
-        self.maxsize(900, 900)
+        self.maxsize(400, 400)
         self.title("Pomodoro app")
+        self.wm_iconbitmap("@clock.xbm")
         self.time_breaker = False
         self.bigfont_cond = "start"
 
