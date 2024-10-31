@@ -18,12 +18,12 @@ This is a Pomodoro timer app, which helps you manage your time efficiently by en
 
 3. Navigate to the project directory
     ```bash
-        cd  pomodoro-timer-project
+    cd  pomodoro-timer-project
     ```
 
 4. Run main.py
     ```bash
-        python3 main.py
+    python3 main.py
     ```
 
 
