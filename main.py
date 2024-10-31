@@ -11,6 +11,7 @@ class gui(tk.Tk):
         self.maxsize(900, 900)
         self.title("Pomodoro app")
         self.resetter = False
+        self.bigfont_cond = "start"
 
     def resetting_process(self):
         self.resetter = True
@@ -89,7 +90,10 @@ class gui(tk.Tk):
         self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(secs)))
 
     def start_timer(self):
+        self.svar.set(f"Pomos : {self.tvar} Breaks : {self.bvar}")
         while True:
+            self.bigfont_cond = "no_break"
+            self.bigfont_update()
             for i in range(self.counttime*60):
                 self.dvar.set(time.strftime("%H:%M:%S", time.gmtime(i)))
                 self.disp.update()
@@ -103,8 +107,9 @@ class gui(tk.Tk):
                 break
             repeater = tmsg.askyesno(
                 "Time Over", "Time is over. Do you want break ?")
-            print(repeater)
             if repeater is True:
+                self.bigfont_cond = "break"
+                self.bigfont_update()
                 for i in range(self.countbreak*60):
                     self.dvar.set(time.strftime(
                         "%H:%M:%S", time.gmtime(i)))
@@ -129,6 +134,7 @@ class gui(tk.Tk):
             self.frm1.destroy()
             self.frm2.destroy()
             self.frm3.destroy()
+            self.bigfont_create()
             self.start_timer()
 
         self.frm1 = tk.Frame(self)
@@ -150,6 +156,23 @@ class gui(tk.Tk):
         but1 = tk.Button(self.frm3, relief="sunken", border=5,
                          text="start", command=ignite)
         but1.pack()
+
+    def bigfont_create(self):
+        self.bigfont_var = tk.StringVar()
+        self.bigfntframe = tk.Frame(self)
+        self.bigfntframe.pack(fill="x")
+        self.bigfont_display = tk.Label(self.bigfntframe,
+                                        textvariable=self.bigfont_var,
+                                        font="cursive 30 bold")
+        self.bigfont_display.pack(fill="x")
+        self.bigfont_var.set("Keep going...")
+        self.bigfntframe.update()
+
+    def bigfont_update(self):
+        if self.bigfont_cond == "break":
+            self.bigfont_var.set("Break")
+        else:
+            self.bigfont_var.set("Keep going...")
 
 
 if __name__ == "__main__":
